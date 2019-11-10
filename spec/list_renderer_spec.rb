@@ -16,7 +16,7 @@ describe 'ListRender' do
                       2. {:author=>"author2", :title=>"title2", :publisher=>"publisher2"}
                       3. {:author=>"author3", :title=>"title3", :publisher=>"publisher3"}}
 
-        expect{ListRenderer.display(list)}.to output(printed_list).to_stdout
+        expect{ListRenderer.display(list)}.to output{printed_list}.to_stdout
       end
     end
   end

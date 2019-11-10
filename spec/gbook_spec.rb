@@ -4,7 +4,7 @@ require_relative '../lib/gbook.rb'
 describe 'Gbook' do
   let(:gbook) { Gbook.new }
   let(:gbook_api) { GbookApi }
-  let(:gbook_reducer) { GbookReducer }
+  let(:gbook_store) { GbookStore }
   let(:list_renderer) { ListRenderer }
 
   describe '#search' do
@@ -21,7 +21,7 @@ describe 'Gbook' do
       end
 
       it 'delegates saving of books to gbook_api' do
-        expect(gbook_reducer).to receive(:save)
+        expect(gbook_store).to receive(:save)
         gbook.search("war")
       end
 
@@ -37,8 +37,8 @@ describe 'Gbook' do
       allow(list_renderer).to receive(:display)
     end
 
-    it "delegates fetching search_results to gbook_reducer" do
-      expect(gbook_reducer).to receive(:fetch)
+    it "delegates fetching search_results to gbook_store" do
+      expect(gbook_store).to receive(:fetch)
       gbook.show
     end
 
@@ -49,15 +49,15 @@ describe 'Gbook' do
   end
 
   describe '#add' do
-    it 'delegates adding a book to store to gbook_reducer' do
-      expect(gbook_reducer).to receive(:add)
+    it 'delegates adding a book to store to gbook_store' do
+      expect(gbook_store).to receive(:add)
       gbook.add(1)
     end
   end
 
   describe '#delete' do
-    it 'delegates deleting a book from store to gbook_reducer' do
-      expect(gbook_reducer).to receive(:delete)
+    it 'delegates deleting a book from store to gbook_store' do
+      expect(gbook_store).to receive(:delete)
       gbook.delete(1)
     end
   end
@@ -67,8 +67,8 @@ describe 'Gbook' do
       allow(list_renderer).to receive(:display)
     end
 
-    it 'delegates fetching reading_list to gbook_reducer' do
-      expect(gbook_reducer).to receive(:fetch)
+    it 'delegates fetching reading_list to gbook_store' do
+      expect(gbook_store).to receive(:fetch)
       gbook.list
     end
 
