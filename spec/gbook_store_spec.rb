@@ -24,24 +24,9 @@ describe 'GbookStore' do
   end
 
   describe '#add' do
-    context "when given a name and a book identifier number" do
+    context "when given a store name and a book identifier number" do
       it "adds the correct book from our search_results list to our named store" do
         expect{GbookStore.add("reading_list", 1)}.to change{GbookStore.fetch("reading_list").count}.by(1)
-      end
-    end
-
-    context "when a search hasn't been made" do
-      it "prints out an error message" do
-        GbookStore.save("search_results", nil)
-        error_message = "Nothing in search result to add. Please search for something first."
-        expect{GbookStore.add("reading_list", 1)}.to output{error_message}.to_stdout
-      end
-    end
-
-    context "when an invalid number is given" do
-      it "prints out an error message" do
-        error_message = "Please enter a valid number."
-        expect{GbookStore.add("reading_list", 0)}.to output{error_message}.to_stdout
       end
     end
   end
@@ -53,21 +38,6 @@ describe 'GbookStore' do
         expect(GbookStore.fetch("reading_list")).to include(first_book_on_reading_list)
         expect{GbookStore.delete("reading_list", 1)}.to change{GbookStore.fetch("reading_list").count}.by(-1)
         expect(GbookStore.fetch("reading_list")).not_to include(first_book_on_reading_list)
-      end
-    end
-
-    context "when a search hasn't been made" do
-      it "prints out an error message" do
-        GbookStore.save("reading_list", nil)
-        error_message = "Nothing in reading list to delete. Please add something first."
-        expect{GbookStore.delete("reading_list", 1)}.to output{error_message}.to_stdout
-      end
-    end
-
-    context "when an invalid number is given" do
-      it "prints out an error message" do
-        error_message = "Please enter a valid number."
-        expect{GbookStore.delete("reading_list", 0)}.to output{error_message}.to_stdout
       end
     end
   end

@@ -25,7 +25,7 @@ $ ruby gbook.rb list
 
 This will return our current reading list
 
-$ ruby gbook,rb delete {book num}
+$ ruby gbook.rb delete {book num}
 
 This will delete the book that you chose from our reading list.
 
