@@ -26,7 +26,8 @@ describe 'GbookStore' do
   describe '#add' do
     context "when given a store name and a book identifier number" do
       it "adds the correct book from our search_results list to our named store" do
-        expect{GbookStore.add("reading_list", 1)}.to change{GbookStore.fetch("reading_list").count}.by(1)
+        book = GbookStore.fetch("search_results")[0]
+        expect{GbookStore.add("reading_list", book)}.to change{GbookStore.fetch("reading_list").count}.by(1)
       end
     end
   end
