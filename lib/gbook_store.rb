@@ -1,4 +1,5 @@
 require "pstore"
+require "byebug"
 
 class GbookStore
   class << self
@@ -15,6 +16,11 @@ class GbookStore
 
     def add(name, book)
       store.transaction do |store|
+
+        if store[name].include?(book)
+          raise "This book already exists in your #{humanize(name)}. Try adding another book"
+        end
+
         store[name] = (store[name] || []).push(book)
       end
     end
@@ -26,6 +32,10 @@ class GbookStore
     end
 
     private
+
+    def humanize(name)
+      name.split("_").join(" ")
+    end
 
     def store
       @@store ||= PStore.new("/tmp/book.txt")
