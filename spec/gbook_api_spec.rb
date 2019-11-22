@@ -18,14 +18,14 @@ describe 'GbookApi' do
     context "when given a keyword and no results are found" do
       it "raises an error" do
         keyword = "ajkdfbhjkdasbf"
-        expect { GbookApi.get(keyword) }.to raise_error("No results found for that keyword.")
+        expect(GbookApi.get(keyword)).to eq([])
       end
     end
 
     context 'when given an invalid keyword' do
       it 'prints out an error' do
         invalid_keyword_error = "You must provide a full keyword."
-        expect{ GbookApi.get("       ")}.to raise_error(invalid_keyword_error)
+        expect{ GbookApi.get("       ")}.to raise_error(GbookApi::KeywordMissingError)
       end
     end
   end

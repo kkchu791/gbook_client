@@ -15,7 +15,7 @@ describe 'Gbook' do
     context 'when given a keyword' do
       it "delegates fetching list of books to gbook_api" do
 
-        expect(gbook_api).to receive(:get)
+        expect(gbook_api).to receive(:get).and_return(["list of books"])
         gbook.search("war")
       end
 

@@ -1,0 +1,4 @@
+lib/gbook.rb 75a3d97ced1930ecf5944b41af0f3610e3819791
+lib/gbook_api.rb 4491c797d87c8b3982b4413f93081eae1311707b
+lib/gbook_store.rb e9b7f1ea11b61f5bbaa7c0a7587e7773011831f1
+lib/list_renderer.rb 7db9851a4bc80ef0f2b068f8469152ec3fc3890b

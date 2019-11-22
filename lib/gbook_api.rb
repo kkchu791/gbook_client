@@ -1,8 +1,9 @@
 require "httparty"
 
 class GbookApi
-  class << self
+  class KeywordMissingError < ArgumentError; end
 
+  class << self
     def get(keyword)
       validate_keyword(keyword)
       response = HTTParty.get("https://www.googleapis.com/books/v1/volumes?q=#{keyword}&maxResults=5&partial=true")
@@ -11,7 +12,7 @@ class GbookApi
       if json["totalItems"] > 0
         parse_books(json["items"])
       else
-        raise "No results found for that keyword."
+        []
       end
     end
 
@@ -33,7 +34,7 @@ class GbookApi
 
     def validate_keyword(keyword)
       if keyword.strip.empty?
-	       raise "You must provide a full keyword."
+        raise KeywordMissingError.new("You need to provide a full keyword.")
       end
     end
   end

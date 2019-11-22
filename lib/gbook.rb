@@ -12,9 +12,14 @@ class Gbook < Thor
 
   def search(keyword)
     list_of_books = GbookApi.get(keyword)
+
+    if list_of_books.empty?
+      puts "No results found for that keyword."
+    end
+
     GbookStore.save(SEARCH_RESULTS, list_of_books)
     ListRenderer.display(list_of_books)
-  rescue => e
+  rescue GbookApi::KeywordMissingError => e
     puts e.message
   end
 
@@ -30,10 +35,11 @@ class Gbook < Thor
   def add(book_index)
     return if search_results_empty?
     return if invalid_index?(book_index, search_results)
+
     book = search_results[book_index.to_i - 1]
     GbookStore.add(READING_LIST, book)
     puts "'#{book['title']} by #{book['author']}' was added to your reading list. Try command 'list' to check it out."
-  rescue => e
+  rescue GbookStore::DuplicateError => e
     puts e.message
   end
 

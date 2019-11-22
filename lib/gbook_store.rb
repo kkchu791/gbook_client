@@ -2,6 +2,7 @@ require "pstore"
 require "byebug"
 
 class GbookStore
+  class DuplicateError < StandardError; end
   class << self
 
     def fetch(name)
@@ -16,9 +17,8 @@ class GbookStore
 
     def add(name, book)
       store.transaction do |store|
-
-        if store[name].include?(book)
-          raise "This book already exists in your #{humanize(name)}. Try adding another book"
+        if (store[name] || []).include?(book)
+          raise DuplicateError.new("This book already exists in your #{humanize(name)}. Try adding another book.")
         end
 
         store[name] = (store[name] || []).push(book)
